@@ -30,7 +30,8 @@ program
   )
   .option('-r, --reverse', 'Sort the output in reverse alphabetic order.')
   .option('-F, --trailing-slash', "Append a '/' for directories.")
-  .option('-S, --line-ascii', 'Turn on ASCII line graphics.');
+  .option('-S, --line-ascii', 'Turn on ASCII line graphics.')
+  .option('--allow-gitignore', 'Allow .gitignore to exclude files.');
 
 program.parse(process.argv);
 const path = program.args[0] || '.'; // Defaults to CWD if not specified.
@@ -45,6 +46,7 @@ const options = {
   reverse: program.reverse,
   trailingSlash: program.trailingSlash,
   ascii: program.lineAscii,
+  allowGitignore: program.allowGitignore,
 };
 
 Object.keys(options).forEach((key) => {

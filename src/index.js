@@ -3,6 +3,8 @@
 const fs = require('fs');
 const nodePath = require('path');
 const prettyBytes = require('pretty-bytes');
+const path = require('path');
+const { fileURLToPath } = require('url');
 
 const DEFAULT_OPTIONS = {
   allFiles: false,
@@ -14,6 +16,10 @@ const DEFAULT_OPTIONS = {
   reverse: false,
   trailingSlash: false,
   lineAscii: false,
+};
+
+const EXT_OPTIONS = {
+  allowGitignore: false,
 };
 
 const SYMBOLS_ANSI = {
@@ -154,8 +160,19 @@ function print(
   return lines;
 }
 
-function tree(path, options) {
-  const combinedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
+function tree(path, options = {}) {
+  const combinedOptions = Object.assign(
+    {},
+    DEFAULT_OPTIONS,
+    EXT_OPTIONS,
+    options,
+  );
+  if (!combinedOptions.allowGitignore) {
+    combinedOptions.exclude = [
+      ...combinedOptions.exclude,
+      ...getGitignoreExclude(path),
+    ];
+  }
   return print(
     nodePath.basename(nodePath.join(process.cwd(), path)),
     path,
@@ -163,6 +180,29 @@ function tree(path, options) {
     '',
     combinedOptions,
   ).join('\n');
+}
+
+function getGitignoreExclude(pathname) {
+  function parsedGitignore(gitignore) {
+    const lines = gitignore.split('\n');
+    const filterLines = lines.filter(
+      (line) => line.trim() !== '' && /^[^\#]/.test(line),
+    );
+    return filterLines;
+  }
+
+  const gitignore = fs.readFileSync(path.join(pathname, '.gitignore'), {
+    encoding: 'utf-8',
+  });
+
+  const rules = parsedGitignore(gitignore);
+
+  const exclude = rules.map((rule) => {
+    const formattedRule = rule.replaceAll(/\W/g, (value) => `\\${value}`);
+    return new RegExp(formattedRule);
+  });
+
+  return exclude;
 }
 
 module.exports = tree;

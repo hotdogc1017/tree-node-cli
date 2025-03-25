@@ -1,0 +1,13 @@
+{
+  "name": "test",
+  "type": "module",
+  "main": "index.js",
+  "packageManager": "pnpm@10.6.3",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "@hotdogc1017/tree-node-cli": "workspace:*",
+    "@types/node": "^22.13.13"
+  }
+}
