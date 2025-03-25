@@ -170,7 +170,7 @@ function tree(path, options = {}) {
   if (!combinedOptions.allowGitignore) {
     combinedOptions.exclude = [
       ...combinedOptions.exclude,
-      ...getGitignoreExclude(path),
+      ...getGitignoreExclude(path, combinedOptions.debug),
     ];
   }
   return print(
@@ -182,7 +182,7 @@ function tree(path, options = {}) {
   ).join('\n');
 }
 
-function getGitignoreExclude(pathname) {
+function getGitignoreExclude(pathname, debug) {
   function parsedGitignore(gitignore) {
     const lines = gitignore.split('\n');
     const filterLines = lines.filter(
@@ -194,6 +194,11 @@ function getGitignoreExclude(pathname) {
   const gitignore = fs.readFileSync(path.join(pathname, '.gitignore'), {
     encoding: 'utf-8',
   });
+
+  if (debug) {
+    console.log(`.gitignore file path: ${path.join(pathname, '.gitignore')}`);
+    console.log(`.gitignore content: ${gitignore}`);
+  }
 
   const rules = parsedGitignore(gitignore);
 

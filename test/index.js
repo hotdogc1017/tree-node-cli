@@ -8,7 +8,7 @@ function main() {
   const sourceDir = path.join(fileURLToPath(import.meta.url), '../..');
   console.log(
     tree(sourceDir, {
-      allowGitignore: true,
+      allowGitignore: false,
     }),
   );
 }
