@@ -1,6 +1,6 @@
 {
   "name": "@hotdogc1017/tree-node-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lists the contents of directories in a tree-like format, similar to the Linux tree command.",
   "publishConfig": {
     "access": "public",
