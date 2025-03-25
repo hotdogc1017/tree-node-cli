@@ -3,7 +3,6 @@
 const fs = require('fs');
 const nodePath = require('path');
 const prettyBytes = require('pretty-bytes');
-const folderSize = require('fast-folder-size/sync');
 
 const DEFAULT_OPTIONS = {
   allFiles: false,
@@ -86,7 +85,7 @@ function print(
     line.push(isLast ? SYMBOLS.LAST_BRANCH : SYMBOLS.BRANCH);
   }
   if (options.sizes) {
-    const filesize = isDir ? folderSize(path) : fs.statSync(path).size;
+    const filesize = fs.statSync(path).size;
     const prettifiedFilesize = prettyBytes(filesize);
     line.push(prettifiedFilesize.replace(' ', ''));
     line.push(' ');
