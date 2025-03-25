@@ -20,6 +20,7 @@ const DEFAULT_OPTIONS = {
 
 const EXT_OPTIONS = {
   allowGitignore: false,
+  debug: false,
 };
 
 const SYMBOLS_ANSI = {
@@ -167,6 +168,9 @@ function tree(path, options = {}) {
     EXT_OPTIONS,
     options,
   );
+  if (combinedOptions.debug) {
+    console.log(`options: ${JSON.stringify(combinedOptions)}`);
+  }
   if (!combinedOptions.allowGitignore) {
     combinedOptions.exclude = [
       ...combinedOptions.exclude,
