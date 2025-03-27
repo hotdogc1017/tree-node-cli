@@ -1,29 +1,28 @@
 # tree-node-cli
 
-## 安装
+## Installation
 
-作为一次性命令工具
+As a one-time command tool:
 ```bash
 npx @hotdogc1017/tree-node-cli@latest
 ```
 
-作为开发依赖
+As a development dependency:
 ```bash
 npm add -D @hotdogc1017/tree-node-cli
 ```
 
-## 使用
-拓展了原有的`tree-node-cli`，支持以下选项：
+## Usage
+Extends the original `tree-node-cli` with the following options:
 
-  - `--allow-gitignore`(node中为`allowGitignore`)：忽略`.gitignore`文件规则，显示所有文件。默认为`false`。
+  - `--allow-gitignore` (in Node as `allowGitignore`): Ignores `.gitignore` file rules and shows all files. Defaults to `false`.
 
+For other usage and configurations, please refer to the [original repository's README](https://github.com/yangshun/tree-node-cli)
 
-其他使用方式和配置请参考[源仓库的README](https://github.com/yangshun/tree-node-cli)
+## Notes
+Includes the following changes:
+  - Removed support for getting folder size: The fast-folder-size dependency doesn't support ESM. Therefore the dependency has been removed.
+  - Respects `.gitignore` file rules: By default excludes files ignored in `.gitignore`. Can be overridden by specifying the option: pass `allowGitignore` in Node or `--allow-gitignore` in CLI.
 
-## 说明
-包含以下改动：
-  - 不再支持获取文件夹大小：fast-folder-size依赖不支持ESM。因此移除了fast-folder-size依赖。
-  - 遵守`.gitignore`文件规则：默认排除`.gitignore`文件中忽略的文件。但可以通过指定选项来忽略此规则：在node中传入`allowGitignore`选项；在CLI中传入`--allow-gitignore`选项。
-
-## 感谢
+## Credits
 Thanks to [yangshun](https://github.com/yangshun)
